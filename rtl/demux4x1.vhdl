@@ -1,43 +1,41 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity demux4x1 is
+entity Demux4x1 is
     generic (
         N: positive := 8
-        );
-        port(
-            sel: in std_logic_vector(1 downto 0);
-            en: in std_logic_vector(N-1 downto 0);
-            z0, z1, z2, z3 : out std_logic_vector(N-1 downto 0)
-        );
-    end entity demux4x1;
+    );
+    port(
+        sel: in std_logic_vector(1 downto 0);
+        a: in std_logic_vector(N-1 downto 0);
+        out00, out01, out10, out11 : out std_logic_vector(N-1 downto 0)
+    );
+end entity Demux4x1;
 
-    architecture arch of demux4x1 is
+architecture arch of Demux4x1 is
+begin
+    process(sel, a)
     begin
-        process(sel, en)
-        begin
-            z0 <= (others => '0');
-            z1 <= (others => '0');
-            z2 <= (others => '0');
-            z3 <= (others => '0');
+        out00 <= (others => '0');
+        out01 <= (others => '0');
+        out10 <= (others => '0');
+        out11 <= (others => '0');
 
-            case(sel) is
+        case(sel) is
 
-            when "00" => 
-                z0 <= en;
-            when "01" =>
-                z1 <= en;
-            when "10" => 
-                z2 <= en;
-            when "11" => 
-                z3 <= en;
-            when others =>
-                z0 <= (others => '0');
-                z1 <= (others => '0');
-                z2 <= (others => '0');
-                z3 <= (others => '0');
-            end case;
-
-        end process;
-
-    end architecture arch;
+        when "00" => 
+            out00 <= a;
+        when "01" =>
+            out01 <= a;
+        when "10" => 
+            out10 <= a;
+        when "11" => 
+            out11 <= a;
+        when others =>
+            out00 <= (others => '0');
+            out01 <= (others => '0');
+            out10 <= (others => '0');
+            out11 <= (others => '0');
+        end case;
+    end process;
+end architecture arch;
