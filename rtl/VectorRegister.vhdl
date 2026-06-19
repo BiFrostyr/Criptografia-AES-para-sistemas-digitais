@@ -5,21 +5,21 @@ entity VectorRegister is
     generic(
         N: positive
     );
-    port map(
+    port (
         clk, enable: in std_logic;
         inVector: in std_logic_vector(N-1 downto 0);
         outVector: out std_logic_vector(N-1 downto 0)
-    )
-end VectorRegister;
+    );
+end entity VectorRegister;
 
 architecture arch of VectorRegister is
 begin
-    process(clk, enable, entrada)
-        variable reg : std_logic_vector(N-1 downto 0)
+    process(clk, enable, inVector)
+        variable reg : std_logic_vector(N-1 downto 0);
     begin
         if rising_edge(clk) then
             if (enable = '1') then
-                saida <= entrada;
+                outVector <= inVector;
             end if;
         end if;
     end process;

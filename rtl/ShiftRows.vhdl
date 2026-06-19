@@ -9,7 +9,7 @@ entity ShiftRows is
 end entity;
 
 architecture arch of ShiftRows is
-    signal a, b, c, d : std_logic_vector(31 downto 0)
+    signal a, b, c, d : std_logic_vector(31 downto 0);
 begin
     a <= inState(127 downto 96);
     b <= inState(87 downto 80) & inState(79 downto 72) & inState(71 downto 64) & inState(95 downto 88);
