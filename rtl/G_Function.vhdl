@@ -9,12 +9,19 @@ entity G_Function is
 end entity G_Function;
 
 architecture arch of G_Function is
+    signal rotated : std_logic_vector(31 downto 0);
     signal sboxOut, rconOut : std_logic_vector(31 downto 0);
 begin
+    rotword : entity work.RotWord
+        port map(
+            inWord  => a,
+            outWord => rotated
+        );    
+
     gen_sboxes : for i in 0 to 3 generate
         sbox : entity work.ROM_Sbox
             port map(
-                address  => a((i + 1) * 8 - 1  downto i * 8),
+                address  => rotated((i + 1) * 8 - 1  downto i * 8),
                 data_out => sboxOut((i + 1) * 8 - 1 downto i * 8)
             );
     end generate gen_sboxes;
