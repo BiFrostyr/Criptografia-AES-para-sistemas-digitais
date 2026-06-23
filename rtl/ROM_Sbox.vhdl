@@ -3,12 +3,9 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ROM_Sbox is
-    generic (
-        DATA_WIDTH : positive := 8
-    );
     port (
-        address  : in  std_logic_vector(DATA_WIDTH-1 downto 0);
-        data_out : out std_logic_vector(DATA_WIDTH-1 downto 0)
+        address  : in  std_logic_vector(7 downto 0);
+        data_out : out std_logic_vector(7 downto 0)
     );
 end entity ROM_Sbox;
 
@@ -50,15 +47,11 @@ architecture arch of ROM_Sbox is
         x"41", x"99", x"2d", x"0f", x"b0", x"54", x"bb", x"16"
     );
 begin
-    assert DATA_WIDTH mod 8 = 0
-        report "ROM_Sbox DATA_WIDTH must be a multiple of 8"
-        severity failure;
-
     process(address)
-        variable substituted : std_logic_vector(DATA_WIDTH-1 downto 0);
+        variable substituted : std_logic_vector(7 downto 0);
         variable byte_addr   : natural range 0 to 255;
     begin
-        for i in 0 to (DATA_WIDTH / 8)-1 loop
+        for i in 0 to 7 loop
             byte_addr := to_integer(unsigned(address((8*i)+7 downto 8*i)));
             substituted((8*i)+7 downto 8*i) := SBOX(byte_addr);
         end loop;
