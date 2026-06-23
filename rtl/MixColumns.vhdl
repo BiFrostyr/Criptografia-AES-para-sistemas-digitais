@@ -13,6 +13,7 @@ end entity MixColumns;
 architecture arch of MixColumns is
     signal a0, a1, a2, a3, mul2a0out, mul2a1out, mul2a2out, mul2a3out : std_logic_vector(7 downto 0);
     signal demux11, demux12, demux13, demux14, demux21, demux22, demux23, demux24, demux31, demux32, demux33, demux34, demux41, demux42, demux43, demux44 : std_logic_vector(7 downto 0);
+    signal dreg_out11, dreg_out12, dreg_out13, dreg_out14, dreg_out21, dreg_out22, dreg_out23, dreg_out24, dreg_out31, dreg_out32, dreg_out33, dreg_out34, dreg_out41, dreg_out42, dreg_out43, dreg_out44 : std_logic_vector(7 downto 0);
 begin
     muxa0 : entity work.Mux4x2_8bits(arch)
         port map(
@@ -89,6 +90,45 @@ begin
             out11 => demux14
         );
 
+    register0 : entity work.VectorRegister(arch)
+        generic map(N => 8)
+            port map(
+                clk => clk,
+                enable => not sel(1) and not sel(0),
+                inVector => demux11,
+                outVector => dreg_out11
+            );
+    
+    register1 : entity work.VectorRegister(arch)
+        generic map(N => 8)
+            port map(
+                clk => clk,
+                enable => not sel(1) and sel(0),
+                inVector => demux12,
+                outVector => dreg_out12
+            );
+    
+    register2 : entity work.VectorRegister(arch)
+        generic map(N => 8)
+            port map(
+                clk => clk,
+                enable => sel(1) and not sel(0),
+                inVector => demux13,
+                outVector => dreg_out13
+            );
+
+    register3: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and sel(0),
+            inVector  => demux14,
+            outVector => dreg_out14
+        );
+    
+
     demux2 : entity work.Demux4x1(arch)
         generic map(N => 8)
         port map(
@@ -99,6 +139,52 @@ begin
             out10 => demux23,
             out11 => demux24
         );
+
+    register4: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => not sel(1) and not sel(0),
+            inVector  => demux21,
+            outVector => dreg_out21
+        );
+
+    register5: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => not sel(1) and sel(0),
+            inVector  => demux22,
+            outVector => dreg_out22
+        );
+
+    register6: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and not sel(0),
+            inVector  => demux23,
+            outVector => dreg_out23
+        );
+
+    register7: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and sel(0),
+            inVector  => demux24,
+            outVector => dreg_out24
+        );
+    
+    
 
     demux3 : entity work.Demux4x1(arch)
         generic map(N => 8)
@@ -111,6 +197,51 @@ begin
             out11 => demux34
         );
 
+    register8: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => not sel(1) and not sel(0),
+            inVector  => demux31,
+            outVector => dreg_out31
+        );
+
+    register9: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => not sel(1) and sel(0),
+            inVector  => demux32,
+            outVector => dreg_out32
+        );
+
+    register10: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and not sel(0),
+            inVector  => demux33,
+            outVector => dreg_out33
+        );
+
+    register11: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and sel(0),
+            inVector  => demux34,
+            outVector => dreg_out34
+        );
+    
+
     demux4 : entity work.Demux4x1(arch)
         generic map(N => 8)
         port map(
@@ -121,13 +252,57 @@ begin
             out10 => demux43,
             out11 => demux44
         );
-    
+
+    register12: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => not sel(1) and not sel(0),
+            inVector  => demux41,
+            outVector => dreg_out41
+        );
+
+    register13: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => not sel(1) and sel(0),
+            inVector  => demux42,
+            outVector => dreg_out42
+        );
+
+    register14: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and not sel(0),
+            inVector  => demux43,
+            outVector => dreg_out43
+        );
+
+    register15: entity work.VectorRegister
+        generic map(
+            N => 8
+        )
+        port map(
+            clk       => clk,
+            enable    => sel(1) and sel(0),
+            inVector  => demux44,
+            outVector => dreg_out44
+        );
+
     stateRegister : entity work.VectorRegister(arch)
         generic map(N => 128)
         port map(
             clk => clk,
             enable => enable,
-            inVector => demux11 & demux12 & demux13 & demux14 & demux21 & demux22 & demux23 & demux24 & demux31 & demux32 & demux33 & demux34 & demux41 & demux42 & demux43 & demux44,
+            inVector => dreg_out11 & dreg_out12 & dreg_out13 & dreg_out14 & dreg_out21 & dreg_out22 & dreg_out23 & dreg_out24 & dreg_out31 & dreg_out32 & dreg_out33 & dreg_out34 & dreg_out41 & dreg_out42 & dreg_out43 & dreg_out44,
             outVector => outState
         );
 end architecture arch;
