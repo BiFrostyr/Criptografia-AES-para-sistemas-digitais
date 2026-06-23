@@ -6,8 +6,8 @@ entity Demux4x1 is
         N: positive := 8
     );
     port(
-        sel: in std_logic_vector(1 downto 0);
-        a: in std_logic_vector(N-1 downto 0);
+        sel : in std_logic_vector(1 downto 0);
+        a : in std_logic_vector(N-1 downto 0);
         out00, out01, out10, out11 : out std_logic_vector(N-1 downto 0)
     );
 end entity Demux4x1;
