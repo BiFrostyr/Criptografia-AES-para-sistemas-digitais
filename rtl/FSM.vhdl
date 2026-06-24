@@ -61,6 +61,20 @@ begin
 
     LS : process(CurrentState)
     begin
+        cState <= '0';
+        cKey <= '0';
+        cAddKey <= '0';
+        cRoundCont <= '0';
+        cState_sbox <= '0';
+        cState_shiftrows <= '0';
+        cState_mixColumns <= '0';
+        cFinalRound <= '0';
+        cCipher <= '0';
+        sKey <= '0';
+        sRoundCont <= '0';
+        sMuxBox <= '0';
+        sSubBytes <= '0';
+        sFinalRound <= '0';
         case CurrentState is
             when IDLE => 
             when LOAD => 
