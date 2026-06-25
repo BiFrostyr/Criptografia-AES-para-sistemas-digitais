@@ -4,7 +4,8 @@
         "alunos": [
           {"nome": "João Pedro Kuhn", "matricula": "25200378"},
           {"nome": "Arthur de Campos Martins", "matricula": "25203686"},
-          {"nome": "Davi Delazaro Altoé", "matricula": "25205753"}
+          {"nome": "Davi Delazaro Altoé", "matricula": "25205753"},
+          {"nome": "Brunna Raphaela Teixeira Brito", "matricula": "25200398"}
         ]
     },
     "quartus": {
